@@ -8,6 +8,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+      naming:
+            physical-strategy: tk.youngdk.jpashop.common.PrefixPhysicalNamingStrategy
     properties:
       hibernate:
         # show_sql: true
