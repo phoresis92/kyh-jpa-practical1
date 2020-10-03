@@ -1,18 +1,15 @@
-package tk.youngdk.jpashop.Member.repository;
+package tk.youngdk.jpashop.testMember.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import tk.youngdk.jpashop.Member.domain.Member;
+import tk.youngdk.jpashop.testMember.domain.Member;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberRepositoryTest {

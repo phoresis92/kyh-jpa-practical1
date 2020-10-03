@@ -1,4 +1,4 @@
-package tk.youngdk.jpashop.Member.domain;
+package tk.youngdk.jpashop.testMember.domain;
 
 import lombok.Getter;
 import lombok.Setter;

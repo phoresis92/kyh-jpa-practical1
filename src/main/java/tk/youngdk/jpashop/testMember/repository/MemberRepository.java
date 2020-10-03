@@ -1,7 +1,7 @@
-package tk.youngdk.jpashop.Member.repository;
+package tk.youngdk.jpashop.testMember.repository;
 
 import org.springframework.stereotype.Repository;
-import tk.youngdk.jpashop.Member.domain.Member;
+import tk.youngdk.jpashop.testMember.domain.Member;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
