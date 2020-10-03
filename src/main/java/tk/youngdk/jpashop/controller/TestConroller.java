@@ -1,22 +1,27 @@
 package tk.youngdk.jpashop.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
+@Controller
 @Slf4j
 public class TestConroller {
 
     @GetMapping("test")
-    public String test(Model model){
-        moddel.add
+    @ResponseBody
+    public String test(){
         log.error("test");
 
         return "test";
 
     }
-}
 
-7  c
+    @GetMapping("hello")
+    public String hello(Model model) {
+        model.addAttribute("data", "hello!!!");
+        return "hello";
+    }
+}
