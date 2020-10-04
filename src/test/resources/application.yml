@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      # 메모리 디비에서 ddl 기본 create_drop 으로 적용된다
+      ddl-auto: create
+      naming:
+            physical-strategy: tk.youngdk.jpashop.common.PrefixPhysicalNamingStrategy
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+
+# 위의 설정이 모두 없어도 상관 없다!!!
+# 스프링 부트가 알아서 메모리디비설정으로 테스트를 돌린다
+
+logging:
+  level:
+    org.hibernate:
+      SQL: debug
+      type: trace
