@@ -9,7 +9,7 @@ import javax.persistence.*;
 import static javax.persistence.FetchType.*;
 
 @Entity
-@Getter @Setter
+@Getter
 public class OrderItem {
 
     @Id
@@ -29,4 +29,26 @@ public class OrderItem {
 
     private int count;
 
+    //==생성 메서드==//
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+
+        orderItem.item = item;
+        orderItem.orderPrice = orderPrice;
+        orderItem.count = count;
+
+        item.removeStock(count);
+
+        return orderItem;
+    }
+
+    //==비즈니스 로직==//
+    public void cancel() {
+        // 재고 수량을 원복해준다.
+        item.addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
 }
