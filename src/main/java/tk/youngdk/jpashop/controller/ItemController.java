@@ -62,16 +62,26 @@ public class ItemController {
     }
 
     @PostMapping(value = "/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
+    public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form) {
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//        itemService.saveItem(book);
 
-        itemService.saveItem(book);
+        /*
+        1. merge 병합을 사용하지말자!
+         - 엔티티 객체를 채우지 않은 필드가 null로 업데이트 된다.
+        2. 어설프게 컨트롤러에서 엔티티 객체를 만들지 말자!
+        3. 트랜잭션이 있는 서비스 계층에서 식별자와 변경할 데이터를 명확하게 전달하자(파라미터, DTO)
+        4. 트랜잭션이 있는 서비스 계층에서 영속 상태의 엔티티를 조회하고 엔티티의 데이터를 직접 변경하자
+        */
+
+        itemService.updateItem(itemId, form.getPrice(), form.getStockQuantity());
+
         return "redirect:/items";
     }
 

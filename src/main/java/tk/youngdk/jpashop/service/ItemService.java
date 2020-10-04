@@ -29,4 +29,23 @@ public class ItemService {
         return itemRepository.findOne(itemId);
     }
 
+    @Transactional
+    public void updateItem(Long itemId, int price, int stockQuantity) {
+        Item findItem = itemRepository.findOne(itemId);
+
+//        findItem.setPrice(price);
+//        findItem.setStockQuantity(stockQuantity);
+
+        /*
+        세터를 모두 닫아서
+        추후에 유지보수에 있어서 어디서 데이터가 변경되는지 파악할 수 있도록 하
+
+        차라리 아래와 같이 엔티티 내부 로직으로 처리하자!
+        * */
+
+        findItem.change(price, stockQuantity);
+
+//        return findItem;
+
+    }
 }
