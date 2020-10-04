@@ -71,12 +71,12 @@ public class Order {
         Order order = new Order();
 
         order.member = member;
-        order.delivery = delivery;
+        order.setDelivery(delivery);
         order.status = OrderStatus.ORDER;
         order.orderDate = LocalDateTime.now();
 
         for (OrderItem orderItem : orderItems) {
-            order.orderItems.add(orderItem);
+            order.addOrderItem(orderItem);
         }
 
         return order;

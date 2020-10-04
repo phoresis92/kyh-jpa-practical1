@@ -8,6 +8,7 @@ import tk.youngdk.jpashop.domain.item.Item;
 import tk.youngdk.jpashop.repository.ItemRepository;
 import tk.youngdk.jpashop.repository.MemberRepository;
 import tk.youngdk.jpashop.repository.OrderRepository;
+import tk.youngdk.jpashop.repository.OrderSearch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +66,8 @@ public class OrderServcie {
     /**
      * 검색
      */
-//    public List<Order> findOrders(OrderSearch orderSearch) {
-//        return orderRepository.findAll(orderSearch);
-//    }
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAllByCriteria(orderSearch);
+    }
 
 }

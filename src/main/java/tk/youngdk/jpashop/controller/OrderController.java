@@ -3,11 +3,11 @@ package tk.youngdk.jpashop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import tk.youngdk.jpashop.domain.Member;
+import tk.youngdk.jpashop.domain.Order;
 import tk.youngdk.jpashop.domain.item.Item;
+import tk.youngdk.jpashop.repository.OrderSearch;
 import tk.youngdk.jpashop.service.ItemService;
 import tk.youngdk.jpashop.service.MemberService;
 import tk.youngdk.jpashop.service.OrderServcie;
@@ -42,4 +42,18 @@ public class OrderController {
         orderService.order(memberId, itemId, count);
         return "redirect:/orders";
     }
+
+    @GetMapping(value = "/orders")
+    public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
+        List<Order> orders = orderService.findOrders(orderSearch);
+        model.addAttribute("orders", orders);
+        return "order/orderList";
+    }
+
+    @PostMapping(value = "/orders/{orderId}/cancel")
+    public String cancelOrder(@PathVariable("orderId") Long orderId) {
+        orderService.cancelOrder(orderId);
+        return "redirect:/orders";
+    }
+
 }
