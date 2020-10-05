@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * xToOne(ManyToOne, OneToOne)
  * 1 + N + N 으로 총 5번의 쿼리가 나간
- * 1 + 2 + 2 
+ * 1 + 2 + 2
  * Order (2건)
  * Order -> Member
  * Order -> Delivery
@@ -47,6 +47,17 @@ public class OrderSimpleApiController {
 
         List<SimpleOrderDto> collect = orders.stream()
                 .map(order -> new SimpleOrderDto(order))
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3(){
+        List<Order> orders = orderServcie.findAllWithMemberDelivery();
+
+        List<SimpleOrderDto> collect = orders.stream()
+                .map(SimpleOrderDto::new)
                 .collect(Collectors.toList());
 
         return collect;
