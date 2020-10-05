@@ -22,6 +22,10 @@ public class Member {
     @Embedded
     private Address address;
 
+    /*
+    엔티티에 프레젠테이션계층을 위한 로직이 추가되면 안된다!
+    */
+//    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<Order>();
 

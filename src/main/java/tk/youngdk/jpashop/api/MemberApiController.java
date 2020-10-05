@@ -10,6 +10,9 @@ import tk.youngdk.jpashop.service.MemberService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,6 +62,42 @@ public class MemberApiController {
         Member findMember = memberService.findOne(id);
 
         return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+    }
+
+    @GetMapping("/api/v1/members")
+    public List<Member> membersV1 () {
+        /*
+        엔티티를 외부에 노출하지 말자!!!
+        @JsonIgnore 로 엔티티 데이터를 가릴수 있지만
+        엔티티에 프레젠테이션계층을 위한 로직을 추가하지 말
+
+        엔티티 필드명이 변경될시 API 스펙이 변경된다!
+        */
+        return memberService.findMembers();
+    }
+
+    @GetMapping("/api/v2/members")
+    public MemberListResult membersV2 () {
+        List<Member> findMembers = memberService.findMembers();
+
+        List<MemberDto> collect = findMembers.stream()
+                .map(member -> new MemberDto(member.getName()))
+                .collect(Collectors.toList());
+
+        return new MemberListResult(collect, collect.size());
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MemberDto {
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MemberListResult<T> {
+        private T data;
+        private int count;
     }
 
     @Data
