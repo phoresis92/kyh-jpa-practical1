@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
       naming:
             physical-strategy: tk.youngdk.jpashop.common.PrefixPhysicalNamingStrategy
     properties:
