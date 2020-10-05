@@ -3,6 +3,7 @@ package tk.youngdk.jpashop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.youngdk.jpashop.domain.Address;
 import tk.youngdk.jpashop.domain.Member;
 import tk.youngdk.jpashop.repository.MemberRepository;
 
@@ -41,5 +42,11 @@ public class MemberService {
 
     public Member findOne(Long memberId){
         return memberRepository.findOne(memberId);
+    }
+
+    @Transactional
+    public void update(Long id, String name, Address address) {
+        Member findMember = memberRepository.findOne(id);
+        findMember.update(name, address);
     }
 }
