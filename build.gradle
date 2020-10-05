@@ -29,6 +29,8 @@ dependencies {
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.2")
 	// validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // Hibernate5Module Jackson 객체에게 Hibernate가 proxy 객체로 설정한 ByteBuddyInterceptor는 데이터를 뿌리지 말고 null로반환하도록 설정
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
