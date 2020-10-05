@@ -1,10 +1,9 @@
 package tk.youngdk.jpashop.api;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tk.youngdk.jpashop.domain.Address;
 import tk.youngdk.jpashop.domain.Member;
 import tk.youngdk.jpashop.service.MemberService;
@@ -41,6 +40,40 @@ public class MemberApiController {
 
         Long memberId = memberService.join(member);
         return new CreateMemberResponse(memberId);
+    }
+
+    @PutMapping("/api/v1/members/{id}")
+    public UpdateMemberResponse updateMemberV1(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid UpdateMemberRequest request) {
+
+        Address address = new Address(request.getCity(), request.getStreet(), request.getZipcode());
+
+//        Member updateMember = memberService.update(id, request.getName(), address);
+        /*
+        커맨드랑 쿼리를 철저히 분리한다
+        위에서 반환 받은 유저는 영속성이 끊긴다
+        유저를 찾을거면 find로 다시 찾아오자
+        */
+        memberService.update(id, request.getName(), address);
+        Member findMember = memberService.findOne(id);
+
+        return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+    }
+
+    @Data
+    static class UpdateMemberRequest {
+        private String name;
+        private String city;
+        private String street;
+        private String zipcode;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class UpdateMemberResponse {
+        private Long id;
+        private String name;
     }
 
     @Data
