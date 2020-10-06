@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tk.youngdk.jpashop.domain.Address;
 import tk.youngdk.jpashop.domain.Order;
@@ -54,6 +55,27 @@ public class OrderApiController {
     public ReturnDto ordersV3(){
         List<Order> orders = orderRepository.findAllWithItem();
 
+        List<OrderDto> collect = orders.stream()
+                .map(order -> new OrderDto(order))
+                .collect(Collectors.toList());
+
+        return new ReturnDto(collect, collect.size());
+    }
+
+    @GetMapping("/api/v3.1/orders")
+    public ReturnDto ordersV3_page(
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "100") int limit
+            ){
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+/*
+xxxToOne 관계를 모두 페치조인 한다. ToOne 관계는 row수를 증가시키지 않는다.
+이후 컬렉션은 지연 로딩으로 조회한다.
+지연 로딩 성능 최적화를 위해화
+spring.jpa.properties.hibernate.default_batch_fetch_size: 1000 (권장: 100 ~ 1000)
+@BatchSize(size = 1000)
+In query로 변경 된다. N + 1 => 1 + 1 로 최적
+*/
         List<OrderDto> collect = orders.stream()
                 .map(order -> new OrderDto(order))
                 .collect(Collectors.toList());
