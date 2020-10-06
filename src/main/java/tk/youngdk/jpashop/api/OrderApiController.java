@@ -33,6 +33,10 @@ public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
 
+    /**
+     * https://www.getpostman.com/collections/3b25043f74463e0ca9d5
+     */
+
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1(){
         List<Order> all = orderRepository.findAllByCriteria(new OrderSearch());
@@ -106,6 +110,7 @@ In query로 변경 된다. N + 1 => 1 + 1 로 최적
         return orders;
     }
 
+/*
     @GetMapping("/api/v6/orders")
     public List<OrderQueryDto> ordersV6(){
         List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
@@ -118,6 +123,7 @@ In query로 변경 된다. N + 1 => 1 + 1 로 최적
                         e.getKey().getOrderStatus(), e.getKey().getAddress(), e.getValue()))
                 .collect(toList());
     }
+*/
 
 
     @Data
