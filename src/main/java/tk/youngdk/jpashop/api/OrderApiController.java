@@ -12,6 +12,8 @@ import tk.youngdk.jpashop.domain.OrderItem;
 import tk.youngdk.jpashop.domain.OrderStatus;
 import tk.youngdk.jpashop.repository.OrderRepository;
 import tk.youngdk.jpashop.repository.OrderSearch;
+import tk.youngdk.jpashop.repository.order.query.OrderQueryDto;
+import tk.youngdk.jpashop.repository.order.query.OrderQueryRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1(){
@@ -82,6 +85,14 @@ In query로 변경 된다. N + 1 => 1 + 1 로 최적
 
         return new ReturnDto(collect, collect.size());
     }
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4(){
+        List<OrderQueryDto> orders = orderQueryRepository.findOrderQueryDtos();
+
+        return orders;
+    }
+
 
     @Data
     static class OrderDto {
