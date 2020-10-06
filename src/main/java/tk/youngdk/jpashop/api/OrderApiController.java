@@ -93,6 +93,13 @@ In query로 변경 된다. N + 1 => 1 + 1 로 최적
         return orders;
     }
 
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDto> ordersV5(){
+        List<OrderQueryDto> orders = orderQueryRepository.findAllByDto_optimization();
+
+        return orders;
+    }
+
 
     @Data
     static class OrderDto {
