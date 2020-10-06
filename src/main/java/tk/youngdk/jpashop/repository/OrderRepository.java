@@ -79,4 +79,25 @@ public class OrderRepository {
 
     }
 
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                " join fetch o.member m " +
+                " join fetch o.delivery d " +
+                " join fetch o.orderItems oi " +
+                " join fetch oi.item i ", Order.class)
+//                .setFirstResult(1)
+//                .setMaxResults(100)
+                .getResultList();
+
+
+        /*
+        HHH000104: firstResult/maxResults specified with collection fetch; applying in memory!
+        distinct를 에플리케이션 레벨에서 하기때문에 DB에서 모든 데이터를 메모리에 올려서 소팅 한다!!!
+
+        컬렉션 페치 조인은 무조건 1개만 사용한다!!!
+        1 * N 까지 사용하고
+        1 * N * M 이상 될경우 하이버네이트가 아무리 distinct 여도 데이터가 부정합하게 조회될 수 있다!
+        */
+    }
 }
